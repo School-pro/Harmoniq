@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Violin Bow Technique & Staff Notation - Hamoniq</title>
+    <style>
+      body {
+        font-family: "Georgia", serif;
+        background: linear-gradient(
+          135deg,
+          #4a90e2 0%,
+          #7b68ee 50%,
+          #9b59b6 100%
+        );
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+        color: #333;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="staff-lines" x="0" y="0" width="100" height="20" patternUnits="userSpaceOnUse"><line x1="0" y1="5" x2="100" y2="5" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/><line x1="0" y1="10" x2="100" y2="10" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/><line x1="0" y1="15" x2="100" y2="15" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23staff-lines)"/></svg>');
+        opacity: 0.1;
+        z-index: -1;
+      }
+
+      .lesson-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 25px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        padding: 50px;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 50px;
+        position: relative;
+      }
+
+      .lesson-number {
+        background: linear-gradient(45deg, #4a90e2, #7b68ee);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+      }
+
+      .header h1 {
+        color: #2c3e50;
+        font-size: 3em;
+        margin: 0;
+        background: linear-gradient(45deg, #2c3e50, #4a90e2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .header p {
+        color: #7b68ee;
+        font-size: 1.3em;
+        margin: 15px 0 0 0;
+        font-style: italic;
+      }
+
+      .section {
+        margin: 40px 0;
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #4a90e2, #7b68ee, #9b59b6);
+        border-radius: 20px 20px 0 0;
+      }
+
+      .section:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      .bow-section {
+        background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+      }
+
+      .theory-section {
+        background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+      }
+
+      .section h2 {
+        color: #2c3e50;
+        font-size: 2.2em;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .section h3 {
+        color: #34495e;
+        font-size: 1.6em;
+        margin: 30px 0 15px 0;
+        border-left: 5px solid #4a90e2;
+        padding-left: 20px;
+        position: relative;
+      }
+
+      .section h3::before {
+        content: "";
+        position: absolute;
+        left: -5px;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        background: linear-gradient(180deg, #4a90e2, #7b68ee);
+        border-radius: 0 3px 3px 0;
+      }
+
+      /* Bow Hold Demonstration */
+      .bow-hold-demo {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin: 30px 0;
+      }
+
+      .bow-hold-step {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 25px;
+        border-radius: 15px;
+        border: 2px solid rgba(74, 144, 226, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .bow-hold-step:hover {
+        border-color: #4a90e2;
+        transform: scale(1.02);
+        box-shadow: 0 8px 25px rgba(74, 144, 226, 0.15);
+      }
+
+      .step-number {
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        background: linear-gradient(45deg, #4a90e2, #7b68ee);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 0.9em;
+      }
+
+      .step-title {
+        font-size: 1.2em;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+
+      .step-description {
+        color: #555;
+        line-height: 1.6;
+      }
+
+      /* Pencil Practice Section */
+      .pencil-practice {
+        background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 100%);
+        padding: 25px;
+        border-radius: 15px;
+        margin: 20px 0;
+        border-left: 5px solid #fdcb6e;
+      }
+
+      .practice-tip {
+        background: rgba(253, 203, 110, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        margin: 15px 0;
+        border-left: 4px solid #fdcb6e;
+        font-style: italic;
+      }
+
+      /* Staff Notation */
+      .staff-container {
+        background: white;
+        border: 3px solid #e8f4fd;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 25px 0;
+        box-shadow: inset 0 2px 10px rgba(74, 144, 226, 0.05);
+        position: relative;
+      }
+
+      .staff-lines {
+        position: relative;
+        height: 120px;
+        margin: 30px 40px;
+      }
+
+      .staff-line {
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        background: #2c3e50;
+        left: 0;
+        border-radius: 2px;
+      }
+
+      .staff-line:nth-child(1) {
+        top: 0;
+      }
+      .staff-line:nth-child(2) {
+        top: 30px;
+      }
+      .staff-line:nth-child(3) {
+        top: 60px;
+      }
+      .staff-line:nth-child(4) {
+        top: 90px;
+      }
+      .staff-line:nth-child(5) {
+        top: 120px;
+      }
+
+      .treble-clef {
+        position: absolute;
+        left: -30px;
+        top: -20px;
+        font-size: 5em;
+        color: #4a90e2;
+        font-family: "Times New Roman", serif;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .note-position {
+        position: absolute;
+        width: 25px;
+        height: 20px;
+        background: #2c3e50;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 0.9em;
+        box-shadow: 0 3px 10px rgba(44, 62, 80, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .note-position:hover {
+        transform: scale(1.2);
+        background: #4a90e2;
+      }
+
+      .note-label {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.9em;
+        font-weight: 600;
+        color: #4a90e2;
+        white-space: nowrap;
+      }
+
+      /* String positions on staff */
+      .note-g {
+        left: 100px;
+        top: 90px;
+      } /* G on 2nd line */
+      .note-d {
+        left: 200px;
+        top: 60px;
+      } /* D on 3rd line */
+      .note-a {
+        left: 300px;
+        top: 45px;
+      } /* A in 2nd space */
+      .note-e {
+        left: 400px;
+        top: 0px;
+      } /* E on 4th line */
+
+      /* String Reference Chart */
+      .string-chart {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .string-card {
+        text-align: center;
+        padding: 20px;
+        border-radius: 12px;
+        color: white;
+        font-weight: bold;
+        font-size: 1.1em;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .string-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .string-card:hover::before {
+        left: 100%;
+      }
+
+      .string-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .string-g-card {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+      }
+      .string-d-card {
+        background: linear-gradient(135deg, #f39c12, #e67e22);
+      }
+      .string-a-card {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+      }
+      .string-e-card {
+        background: linear-gradient(135deg, #9b59b6, #8e44ad);
+      }
+
+      .string-note {
+        font-size: 2em;
+        margin-bottom: 10px;
+      }
+
+      .string-info {
+        font-size: 0.9em;
+        opacity: 0.9;
+      }
+
+      /* Long Bow Exercise */
+      .long-bow-exercise {
+        background: linear-gradient(135deg, #e8f8f5 0%, #d5f4e6 100%);
+        padding: 25px;
+        border-radius: 15px;
+        margin: 25px 0;
+        border-left: 5px solid #00b894;
+      }
+
+      .exercise-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin: 20px 0;
+      }
+
+      .exercise-step {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px solid rgba(0, 184, 148, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .exercise-step:hover {
+        border-color: #00b894;
+        transform: translateY(-3px);
+      }
+
+      .exercise-title {
+        color: #00b894;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      /* Practice Routine */
+      .practice-routine {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 30px;
+        border-radius: 15px;
+        margin: 30px 0;
+        border: 2px solid #dee2e6;
+      }
+
+      .routine-header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .routine-title {
+        font-size: 1.8em;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .routine-subtitle {
+        color: #6c757d;
+        font-style: italic;
+      }
+
+      .routine-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .routine-step {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .routine-step:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .routine-step-number {
+        background: linear-gradient(45deg, #4a90e2, #7b68ee);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
+
+      .routine-step-title {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 8px;
+      }
+
+      .routine-step-time {
+        color: #4a90e2;
+        font-size: 0.9em;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+
+      /* Assessment Goals */
+      .assessment {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+        padding: 25px;
+        border-radius: 15px;
+        margin: 30px 0;
+        border-left: 5px solid #ffc107;
+      }
+
+      .assessment h3 {
+        color: #856404;
+        border-left-color: #ffc107;
+      }
+
+      .assessment-goals {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+      }
+
+      .assessment-goal {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #ffc107;
+      }
+
+      .goal-title {
+        font-weight: 600;
+        color: #856404;
+        margin-bottom: 5px;
+      }
+
+      .goal-description {
+        color: #533407;
+        font-size: 0.95em;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .lesson-container {
+          padding: 30px 20px;
+        }
+
+        .header h1 {
+          font-size: 2em;
+        }
+
+        .bow-hold-demo {
+          grid-template-columns: 1fr;
+        }
+
+        .string-chart {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .staff-lines {
+          margin: 30px 10px;
+        }
+
+        .treble-clef {
+          left: -20px;
+          font-size: 3.5em;
+        }
+
+        .note-position {
+          width: 20px;
+          height: 16px;
+          font-size: 0.8em;
+        }
+
+        /* Adjust note positions for mobile */
+        .note-g {
+          left: 60px;
+        }
+        .note-d {
+          left: 140px;
+        }
+        .note-a {
+          left: 220px;
+        }
+        .note-e {
+          left: 300px;
+        }
+      }
+
+      /* Interactive Elements */
+      .interactive-note {
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .interactive-note:hover {
+        background: #4a90e2;
+        transform: scale(1.1);
+      }
+
+      .interactive-note.active {
+        background: #e74c3c;
+        animation: pulse 1s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      /* Bow Technique Illustrations */
+      .bow-diagram {
+        text-align: center;
+        margin: 20px 0;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+      }
+
+      .bow-parts {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .bow-part {
+        text-align: center;
+        margin: 10px;
+        padding: 15px;
+        background: rgba(74, 144, 226, 0.1);
+        border-radius: 8px;
+        min-width: 120px;
+      }
+
+      .bow-part-name {
+        font-weight: 600;
+        color: #4a90e2;
+        margin-bottom: 5px;
+      }
+
+      .bow-part-description {
+        font-size: 0.9em;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="lesson-container">
+      <div class="header">
+        <div class="lesson-number">Lesson 2</div>
+        <h1>🏹 Bow Technique & Staff Reading</h1>
+        <p>Master the bow hold and explore musical notation</p>
+      </div>
+
+      <div class="section bow-section">
+        <h2>🏹 Bow Hold & Technique</h2>
+
+        <h3>Understanding Your Bow</h3>
+        <div class="bow-diagram">
+          <div class="bow-parts">
+            <div class="bow-part">
+              <div class="bow-part-name">Tip</div>
+              <div class="bow-part-description">
+                End of bow, lightest contact
+              </div>
+            </div>
+            <div class="bow-part">
+              <div class="bow-part-name">Upper Half</div>
+              <div class="bow-part-description">
+                Lighter, more agile section
+              </div>
+            </div>
+            <div class="bow-part">
+              <div class="bow-part-name">Middle</div>
+              <div class="bow-part-description">Balanced, even sound</div>
+            </div>
+            <div class="bow-part">
+              <div class="bow-part-name">Lower Half</div>
+              <div class="bow-part-description">Stronger, more powerful</div>
+            </div>
+            <div class="bow-part">
+              <div class="bow-part-name">Frog</div>
+              <div class="bow-part-description">Where you hold the bow</div>
+            </div>
+          </div>
+        </div>
+
+        <h3>Pencil Practice: Building Your Bow Hold</h3>
+        <div class="pencil-practice">
+          <p>
+            <strong>Why start with a pencil?</strong> A pencil is lighter and
+            less intimidating than a bow, allowing you to focus purely on finger
+            placement and hand position without worrying about sound production.
+          </p>
+
+          <div class="bow-hold-demo">
+            <div class="bow-hold-step">
+              <div class="step-number">1</div>
+              <div class="step-title">Thumb Placement</div>
+              <div class="step-description">
+                Place your right thumb on the pencil at the grip area (where the
+                frog would be). The thumb should be slightly bent and contact
+                the pencil between the tip and first joint.
+              </div>
+            </div>
+
+            <div class="bow-hold-step">
+              <div class="step-number">2</div>
+              <div class="step-title">Middle Finger Support</div>
+              <div class="step-description">
+                Your middle finger goes opposite the thumb, providing the main
+                support. The pad of the middle finger should rest on the
+                pencil's "frog" area.
+              </div>
+            </div>
+
+            <div class="bow-hold-step">
+              <div class="step-number">3</div>
+              <div class="step-title">Ring Finger Position</div>
+              <div class="step-description">
+                The ring finger tip touches the pencil near the middle finger.
+                This finger helps control the pencil's angle and pressure.
+              </div>
+            </div>
+
+            <div class="bow-hold-step">
+              <div class="step-number">4</div>
+              <div class="step-title">Index Finger Control</div>
+              <div class="step-description">
+                The index finger rests gently on top of the pencil, providing
+                fine control. Don't grip too tightly - think of holding a small
+                bird.
+              </div>
+            </div>
+          </div>
+
+          <div class="practice-tip">
+            <strong>Practice Tip:</strong> Hold the pencil and practice
+            "drawing" long, straight lines in the air. Your wrist should be
+            flexible, and your fingers should maintain their curved shape.
+            Practice for 5-10 minutes daily before moving to the actual bow.
+          </div>
+        </div>
+
+        <h3>Transitioning to the Bow</h3>
+        <p>
+          Once you're comfortable with the pencil hold, apply the same finger
+          positions to your violin bow. The bow is heavier and longer, so expect
+          some adjustment time.
+        </p>
+
+        <div class="bow-hold-demo">
+          <div class="bow-hold-step">
+            <div class="step-number">1</div>
+            <div class="step-title">Bow Weight</div>
+            <div class="step-description">
+              The bow is heavier than a pencil. Let gravity help you - don't
+              press down hard. The bow's weight is usually sufficient for sound
+              production.
+            </div>
+          </div>
+
+          <div class="bow-hold-step">
+            <div class="step-number">2</div>
+            <div class="step-title">Relaxed Grip</div>
+            <div class="step-description">
+              Maintain the same finger positions from pencil practice, but keep
+              everything relaxed. Tension in your hand will transfer to your
+              sound and cause fatigue.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section theory-section">
+        <h2>🎼 Notes on the Staff</h2>
+
+        <h3>Treble Clef Mastery</h3>
+        <p>
+          The treble clef is your roadmap to reading music. Every line and space
+          represents a specific pitch, and understanding this system is crucial
+          for violin playing.
+        </p>
+
+        <div class="staff-container">
+          <div class="staff-lines">
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="staff-line"></div>
+            <div class="treble-clef">𝄞</div>
+
+            <div class="note-position note-g interactive-note" data-note="G">
+              G
+              <div class="note-label">G String</div>
+            </div>
+            <div class="note-position note-d interactive-note" data-note="D">
+              D
+              <div class="note-label">D String</div>
+            </div>
+            <div class="note-position note-a interactive-note" data-note="A">
+              A
+              <div class="note-label">A String</div>
+            </div>
+            <div class="note-position note-e interactive-note" data-note="E">
+              E
+              <div class="note-label">E String</div>
+            </div>
+          </div>
+          <p style="text-align: center; margin-top: 40px">
+            <strong>Click on each note to hear its position!</strong><br />
+            Staff Lines (bottom to top): E - G - B - D - F<br />
+            Staff Spaces (bottom to top): F - A - C - E
+          </p>
+        </div>
+
+        <h3>Open String Note Names</h3>
+        <p>
+          Your violin has four strings, each with its own pitch and position on
+          the staff. Memorizing these is essential for reading music.
+        </p>
+
+        <div class="string-chart">
+          <div class="string-card string-g-card">
+            <div class="string-note">G</div>
+            <div class="string-info">
+              Lowest String<br />
+              2nd Line on Staff<br />
+              Richest, Warmest Tone
+            </div>
+          </div>
+
+          <div class="string-card string-d-card">
+            <div class="string-note">D</div>
+            <div class="string-info">
+              Second String<br />
+              3rd Line on Staff<br />
+              Balanced, Clear Tone
+            </div>
+          </div>
+
+          <div class="string-card string-a-card">
+            <div class="string-note">A</div>
+            <div class="string-info">
+              Third String<br />
+              2nd Space on Staff<br />
+              Bright, Singing Tone
+            </div>
+          </div>
+
+          <div class="string-card string-e-card">
+            <div class="string-note">E</div>
+            <div class="string-info">
+              Highest String<br />
+              4th Line on Staff<br />
+              Brilliant, Piercing Tone
+            </div>
+          </div>
+        </div>
+
+        <div class="practice-tip">
+          <strong>Memory Aid:</strong> Remember the strings from lowest to
+          highest as "Good Dogs Always Eat" (G-D-A-E). This matches the order
+          from the thickest string to the thinnest string.
+        </div>
+      </div>
+
+      <div class="section bow-section">
+        <h2>🎯 Long Bow Practice on A & E Strings</h2>
+
+        <div class="long-bow-exercise">
+          <h3>Why A & E Strings First?</h3>
+          <p>
+            The A and E strings are higher-pitched and more responsive, making
+            them ideal for beginners. They require less bow pressure and produce
+            a clearer sound, helping you hear your technique more easily.
+          </p>
+
+          <div class="exercise-steps">
+            <div class="exercise-step">
+              <div class="exercise-title">Preparation</div>
+              <p>
+                Set up your violin properly. Check your posture, bow hold, and
+                ensure the violin is securely positioned on your shoulder.
+              </p>
+            </div>
+
+            <div class="exercise-step">
+              <div class="exercise-title">Starting Position</div>
+              <p>
+                Place the bow on the A string near the bridge. Use the middle
+                section of the bow for the most balanced sound.
+              </p>
+            </div>
+
+            <div class="exercise-step">
+              <div class="exercise-title">Down Bow (⌐)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

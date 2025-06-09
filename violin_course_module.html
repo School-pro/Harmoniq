@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hamoniq - Violin Course Modules</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        background: linear-gradient(
+          135deg,
+          #0f0f23 0%,
+          #1a1a2e 50%,
+          #16213e 100%
+        );
+        color: #ffffff;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .header {
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 2rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .back-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .back-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+      }
+
+      /* Main Content */
+      .main-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 60px 20px;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .page-title {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmer 3s ease-in-out infinite;
+      }
+
+      @keyframes shimmer {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      .page-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.8;
+        margin-bottom: 20px;
+      }
+
+      .progress-bar {
+        background: rgba(255, 255, 255, 0.1);
+        height: 8px;
+        border-radius: 4px;
+        overflow: hidden;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .progress-fill {
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        height: 100%;
+        width: 25%;
+        border-radius: 4px;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      .progress-text {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        opacity: 0.7;
+      }
+
+      /* Module Cards Grid */
+      .modules-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+        margin-top: 40px;
+      }
+
+      .module-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 30px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+      }
+
+      .module-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+
+      .module-card:hover::before {
+        transform: translateX(0);
+      }
+
+      .module-card:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border-color: rgba(102, 126, 234, 0.3);
+      }
+
+      .module-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .module-number {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .module-status {
+        padding: 5px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .status-completed {
+        background: rgba(72, 187, 120, 0.2);
+        color: #68d391;
+        border: 1px solid rgba(72, 187, 120, 0.3);
+      }
+
+      .status-current {
+        background: rgba(246, 173, 85, 0.2);
+        color: #f6ad55;
+        border: 1px solid rgba(246, 173, 85, 0.3);
+      }
+
+      .status-locked {
+        background: rgba(113, 128, 150, 0.2);
+        color: #a0aec0;
+        border: 1px solid rgba(113, 128, 150, 0.3);
+      }
+
+      .module-title {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        color: #ffffff;
+      }
+
+      .module-description {
+        opacity: 0.8;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .module-topics {
+        margin-bottom: 25px;
+      }
+
+      .topic-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .topic-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 5px 0;
+        opacity: 0.7;
+        font-size: 0.9rem;
+      }
+
+      .topic-icon {
+        color: #667eea;
+        font-size: 0.8rem;
+      }
+
+      .module-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .module-duration {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        opacity: 0.6;
+        font-size: 0.9rem;
+      }
+
+      .module-btn {
+        padding: 8px 20px;
+        border: none;
+        border-radius: 20px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .btn-start {
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+      }
+
+      .btn-continue {
+        background: linear-gradient(45deg, #f6ad55, #f093fb);
+        color: white;
+      }
+
+      .btn-locked {
+        background: rgba(113, 128, 150, 0.3);
+        color: #a0aec0;
+        cursor: not-allowed;
+      }
+
+      .module-btn:not(.btn-locked):hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .page-title {
+          font-size: 2rem;
+        }
+
+        .modules-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .module-card {
+          padding: 20px;
+        }
+
+        .header-content {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
+
+      /* Floating Elements */
+      .floating-notes {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        opacity: 0.1;
+      }
+
+      .note {
+        position: absolute;
+        font-size: 2rem;
+        animation: float 15s infinite linear;
+      }
+
+      .note:nth-child(1) {
+        left: 10%;
+        animation-delay: 0s;
+      }
+      .note:nth-child(2) {
+        left: 20%;
+        animation-delay: 3s;
+      }
+      .note:nth-child(3) {
+        left: 30%;
+        animation-delay: 6s;
+      }
+      .note:nth-child(4) {
+        left: 70%;
+        animation-delay: 9s;
+      }
+      .note:nth-child(5) {
+        left: 80%;
+        animation-delay: 12s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(100vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="floating-notes">
+      <div class="note">♪</div>
+      <div class="note">♫</div>
+      <div class="note">♪</div>
+      <div class="note">♬</div>
+      <div class="note">♪</div>
+    </div>
+
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">Hamoniq</div>
+        <a href="index.html" class="back-btn" onclick="goBack()">
+          ← Back to Home
+        </a>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="page-header">
+        <h1 class="page-title">🎻 Violin Course</h1>
+        <p class="page-subtitle">
+          Master the violin with our comprehensive step-by-step program
+        </p>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <p class="progress-text">Module 2 of 8 • 25% Complete</p>
+      </div>
+
+      <div class="modules-grid">
+        <!-- Module 1 - Completed -->
+        <div class="module-card" onclick="openModule(1)">
+          <div class="module-header">
+            <div class="module-number">1</div>
+            <div class="module-status status-completed">✓ Completed</div>
+          </div>
+          <h3 class="module-title">Violin Fundamentals</h3>
+          <p class="module-description">
+            Learn the basics of violin setup, posture, and pizzicato technique.
+            Master fundamental music theory including note values and treble
+            clef.
+          </p>
+          <div class="module-topics">
+            <ul class="topic-list">
+              <li class="topic-item">
+                <span class="topic-icon">🎯</span>
+                Open string plucking & posture review
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎼</span>
+                Quarter, half, and whole notes
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">📊</span>
+                Treble clef and music staff
+              </li>
+            </ul>
+          </div>
+          <div class="module-footer">
+            <div class="module-duration">⏱️ 25 minutes</div>
+            <a href="./violin_fundamental.html" class="module-btn btn-start">
+              Review →
+            </a>
+          </div>
+        </div>
+
+        <!-- Module 2 - Current -->
+        <div class="module-card" onclick="openModule(2)">
+          <div class="module-header">
+            <div class="module-number">2</div>
+            <div class="module-status status-current">📍 Current</div>
+          </div>
+          <h3 class="module-title">Bow Technique & Staff Reading</h3>
+          <p class="module-description">
+            Develop proper bow hold and learn to produce clear, sustained tones.
+            Master note identification on the treble clef staff.
+          </p>
+          <div class="module-topics">
+            <ul class="topic-list">
+              <li class="topic-item">
+                <span class="topic-icon">🏹</span>
+                Bow hold practice (pencil & bow)
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎵</span>
+                Long bows on A & E strings
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">📝</span>
+                Notes on staff (treble clef focus)
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎹</span>
+                Open string note names (E, A, D, G)
+              </li>
+            </ul>
+          </div>
+          <div class="module-footer">
+            <div class="module-duration">⏱️ 30 minutes</div>
+            <a
+              href="./Bow_techniques_and_staff_reading.html"
+              class="module-btn btn-continue"
+              onclick="startModule2()"
+            >
+              Continue →
+            </a>
+          </div>
+        </div>
+
+        <!-- Module 3 - Locked -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-number">3</div>
+            <div class="module-status status-locked">🔒 Locked</div>
+          </div>
+          <h3 class="module-title">First Position Fingering</h3>
+          <p class="module-description">
+            Learn proper left-hand finger placement and play your first notes on
+            each string. Introduction to basic scales.
+          </p>
+          <div class="module-topics">
+            <ul class="topic-list">
+              <li class="topic-item">
+                <span class="topic-icon">👆</span>
+                Finger placement & numbering
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎵</span>
+                First finger exercises
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">📊</span>
+                Simple melodies
+              </li>
+            </ul>
+          </div>
+          <div class="module-footer">
+            <div class="module-duration">⏱️ 35 minutes</div>
+            <div class="module-btn btn-locked">🔒 Complete Module 2</div>
+          </div>
+        </div>
+
+        <!-- Module 4 - Locked -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-number">4</div>
+            <div class="module-status status-locked">🔒 Locked</div>
+          </div>
+          <h3 class="module-title">Rhythm & Timing</h3>
+          <p class="module-description">
+            Master basic rhythmic patterns and learn to play in time.
+            Introduction to eighth notes and simple time signatures.
+          </p>
+          <div class="module-topics">
+            <ul class="topic-list">
+              <li class="topic-item">
+                <span class="topic-icon">🥁</span>
+                Eighth note patterns
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">⏰</span>
+                4/4 time signature
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎼</span>
+                Rhythm exercises
+              </li>
+            </ul>
+          </div>
+          <div class="module-footer">
+            <div class="module-duration">⏱️ 28 minutes</div>
+            <div class="module-btn btn-locked">🔒 Locked</div>
+          </div>
+        </div>
+
+        <!-- Module 5 - Locked -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-number">5</div>
+            <div class="module-status status-locked">🔒 Locked</div>
+          </div>
+          <h3 class="module-title">Simple Songs</h3>
+          <p class="module-description">
+            Put your skills together to play your first complete songs. Learn
+            bowing patterns and musical expression.
+          </p>
+          <div class="module-topics">
+            <ul class="topic-list">
+              <li class="topic-item">
+                <span class="topic-icon">🎶</span>
+                "Twinkle, Twinkle" variations
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🏹</span>
+                Down-bow and up-bow patterns
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎭</span>
+                Musical dynamics
+              </li>
+            </ul>
+          </div>
+          <div class="module-footer">
+            <div class="module-duration">⏱️ 40 minutes</div>
+            <div class="module-btn btn-locked">🔒 Locked</div>
+          </div>
+        </div>
+
+        <!-- Module 6 - Locked -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-number">6</div>
+            <div class="module-status status-locked">🔒 Locked</div>
+          </div>
+          <h3 class="module-title">String Crossings</h3>
+          <p class="module-description">
+            Master the technique of smoothly changing between strings while
+            maintaining bow control and tone quality.
+          </p>
+          <div class="module-topics">
+            <ul class="topic-list">
+              <li class="topic-item">
+                <span class="topic-icon">↔️</span>
+                Adjacent string crossings
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎯</span>
+                Bow angle control
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎵</span>
+                Multi-string exercises
+              </li>
+            </ul>
+          </div>
+          <div class="module-footer">
+            <div class="module-duration">⏱️ 32 minutes</div>
+            <div class="module-btn btn-locked">🔒 Locked</div>
+          </div>
+        </div>
+
+        <!-- Module 7 - Locked -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-number">7</div>
+            <div class="module-status status-locked">🔒 Locked</div>
+          </div>
+          <h3 class="module-title">Advanced Bowing</h3>
+          <p class="module-description">
+            Explore different bowing techniques including staccato, legato, and
+            basic articulations for musical expression.
+          </p>
+          <div class="module-topics">
+            <ul class="topic-list">
+              <li class="topic-item">
+                <span class="topic-icon">🎪</span>
+                Staccato technique
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🌊</span>
+                Legato bowing
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎨</span>
+                Musical articulation
+              </li>
+            </ul>
+          </div>
+          <div class="module-footer">
+            <div class="module-duration">⏱️ 38 minutes</div>
+            <div class="module-btn btn-locked">🔒 Locked</div>
+          </div>
+        </div>
+
+        <!-- Module 8 - Locked -->
+        <div class="module-card">
+          <div class="module-header">
+            <div class="module-number">8</div>
+            <div class="module-status status-locked">🔒 Locked</div>
+          </div>
+          <h3 class="module-title">Performance Ready</h3>
+          <p class="module-description">
+            Combine all your skills to perform complete pieces with confidence.
+            Learn stage presence and performance techniques.
+          </p>
+          <div class="module-topics">
+            <ul class="topic-list">
+              <li class="topic-item">
+                <span class="topic-icon">🎭</span>
+                Performance preparation
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🎼</span>
+                Complete pieces
+              </li>
+              <li class="topic-item">
+                <span class="topic-icon">🏆</span>
+                Final assessment
+              </li>
+            </ul>
+          </div>
+          <div class="module-footer">
+            <div class="module-duration">⏱️ 45 minutes</div>
+            <div class="module-btn btn-locked">🔒 Locked</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      function goBack() {
+        // alert("Returning to Hamoniq homepage...");
+        // In real implementation: window.history.back() or navigate to homepage
+        window.history.back();
+      }
+
+      function openModule(moduleNumber) {
+        if (moduleNumber === 1) {
+          alert("Opening Module 1: Violin Fundamentals (completed)");
+          // In real implementation: navigate to Module 1 lesson
+        } else if (moduleNumber > 2) {
+          alert("This module is locked. Complete the previous modules first!");
+        }
+      }
+
+      function startModule2() {
+        alert("Starting Module 2: Bow Technique & Staff Reading!");
+        // This will be connected to your lesson page
+        // In real implementation: window.location.href = 'module2-lesson.html';
+        window.location.href = "Bow_techniques_and_staff_reading.html";
+      }
+
+      // Add entrance animations
+      document.addEventListener("DOMContentLoaded", function () {
+        const cards = document.querySelectorAll(".module-card");
+        cards.forEach((card, index) => {
+          card.style.opacity = "0";
+          card.style.transform = "translateY(30px)";
+
+          setTimeout(() => {
+            card.style.transition = "opacity 0.6s ease, transform 0.6s ease";
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+          }, index * 100);
+        });
+      });
+    </script>
+  </body>
+</html>
