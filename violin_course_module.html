@@ -572,7 +572,15 @@
           </div>
           <div class="module-footer">
             <div class="module-duration">⏱️ 28 minutes</div>
-            <div class="module-btn btn-locked">🔒 Locked</div>
+            <div class="module-footer">
+              <a
+                href="./module_four.html"
+                class="module-btn btn-continue"
+                onclick="startModule4()"
+              >
+                Continue →
+              </a>
+            </div>
           </div>
         </div>
 
@@ -736,12 +744,20 @@
 
       function startModule3() {
         alert(
-          "Starting Module 2: Bow Hold Practice: Foundation of Sound Production!"
+          "Starting Module 3: Bow Hold Practice: Foundation of Sound Production!"
         );
 
         // This will be connected to your lesson page
         // In real implementation: window.location.href = 'module2-lesson.html';
         window.location.href = "module_three.html";
+      }
+
+      function startModule4(params) {
+        alert("Starting Module 4: Rhythm & Timing!");
+
+        // This will be connected to your lesson page
+        // In real implementation: window.location.href = 'module2-lesson.html';
+        window.location.href = "module_four.html";
       }
 
       // Add entrance animations
